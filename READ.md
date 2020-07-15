@@ -1,0 +1,1 @@
+a hackbright programming exercise that creates a discord bot that using markov chaining to create texts
