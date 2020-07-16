@@ -83,34 +83,32 @@ def make_text(chains):
     words = []
     not_end_of_list = True
     # your code goes here
+ 
+    # starts with a capital lettered word from source text
+    capitalized_ngrams = []
+    for key in chains.keys():
+        # check if the first tuple in key[0][0]
+        if key[0][0].isupper():
+            capitalized_ngrams.append(key)
     
-    # capitalized_ngrams = []
-    # for key in chains.keys():
-    #     # check if the first tuple in key[0][0]
-    #     if key[0][0].isupper():
-    #         capitalized_ngrams.append(key)
-    # # print(capitalized_ngrams)
-    # choice_n = choice(capitalized_ngrams)
-    # # add bigram key  to word list
-    # words.extend(choice_n)
-    # if chains[choice_n]:
-    #     choose_third = choice(chains[choice_n])
-    #     words.append(choose_third)
+    
 
-    selected_keys = list(chains.keys())
+    selected_keys = list(capitalized_ngrams)
     count = 0
     while not_end_of_list:
         choice_n = choice(selected_keys)
-       
+
         if count == 0:
             words.extend(choice_n)
     
         if chains[choice_n] and count <= 150:
             # as long as there is an option, picks a random element from dict list
             choose_next = choice(chains[choice_n])
+            # adds new word to list
             words.append(choose_next)
             # creates a list of keys whose last item in tuple is item from list
             selected_keys = [x for x in chains.keys() if x == tuple([*choice_n[1:], choose_next])]
+            # it is possible continues
             if selected_keys:
                 pass
             else:
@@ -138,7 +136,7 @@ async def on_message(message):
         return
 
     # TODO: replace this with your code
-    if message.content:
+    if message.content.startswith('Sarah'):
         print("sending a message")
         choice_file = choice(['green-eggs.txt', 'gettysburg.txt', 'reading_gaol.txt'])
         # choice_ngrams = choice([2, 3, 4, 5])
