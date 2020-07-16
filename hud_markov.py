@@ -83,8 +83,7 @@ def make_text(chains):
     words = []
     not_end_of_list = True
     # your code goes here
-    # use random.choice to pick a bigram element from keys
-    # make a list of capitalized keys
+    
     # capitalized_ngrams = []
     # for key in chains.keys():
     #     # check if the first tuple in key[0][0]
@@ -102,37 +101,23 @@ def make_text(chains):
     count = 0
     while not_end_of_list:
         choice_n = choice(selected_keys)
-        # print("first key", choice_n)
+       
         if count == 0:
             words.extend(choice_n)
-            # print('first gram', choice_n)
-            # print(words)
-        # add bigram key  to word list
+    
         if chains[choice_n] and count <= 150:
-            # print("list of options", chains[choice_n])
             # as long as there is an option, picks a random element from dict list
             choose_next = choice(chains[choice_n])
-            # print("new word", choose_next)
             words.append(choose_next)
-            # print("new text", words)
-            # print('next word choice', choose_next)
-            # take last word in tuple
-            # first_word_in_key = choice_n[1:]
-            
-            # print(first_word_in_key)
-            # print((choice_n[0].lower(), choice_n[1].lower()), (first_word_in_key.lower(), choose_next.lower()))
-            # creates a list of keys whose first item in tuple is item from list
+            # creates a list of keys whose last item in tuple is item from list
             selected_keys = [x for x in chains.keys() if x == tuple([*choice_n[1:], choose_next])]
-            # print("next key", selected_keys)
             if selected_keys:
-                # print('new options', selected_keys)
                 pass
             else:
-                # words.extend(choose_next)
                 not_end_of_list = False
 
             count += 1
-            # print('added to text', words)
+            
         else:
             not_end_of_list = False
 
@@ -140,34 +125,34 @@ def make_text(chains):
 
 
 
-# client = discord.Client()
+client = discord.Client()
 
-# @client.event
-# async def on_ready():
-#     print(f'Successfully connected! Logged in as {client.user}.')
+@client.event
+async def on_ready():
+    print(f'Successfully connected! Logged in as {client.user}.')
 
 
-# @client.event
-# async def on_message(message):
-#     if message.author == client.user:
-#         return
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
 
-#     # TODO: replace this with your code
-#     if message.content:
-#         print("sending a message")
-#         choice_file = choice(['green-eggs.txt', 'gettysburg.txt', 'reading_gaol.txt'])
-#         # choice_ngrams = choice([2, 3, 4, 5])
-#         choice_ngrams = 2
-#         input_text = open_and_read_file(choice_file)
-#         # Get a Markov chain
-#         chains = make_chains(input_text,choice_ngrams)
-#         # Produce random text
-#         random_text = make_text(chains)
-#         await message.channel.send(random_text[:2000])
+    # TODO: replace this with your code
+    if message.content:
+        print("sending a message")
+        choice_file = choice(['green-eggs.txt', 'gettysburg.txt', 'reading_gaol.txt'])
+        # choice_ngrams = choice([2, 3, 4, 5])
+        choice_ngrams = 2
+        input_text = open_and_read_file(choice_file)
+        # Get a Markov chain
+        chains = make_chains(input_text,choice_ngrams)
+        # Produce random text
+        random_text = make_text(chains)
+        await message.channel.send(random_text[:2000])
        
 
 
-# client.run(token)
+client.run(token)
 
 
 
